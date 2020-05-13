@@ -1,0 +1,354 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[margin=0.7in]{caption}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\graphicspath{{images/}}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[page, titletoc, title]{appendix}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,angles,quotes}
+\usepackage{bm}
+
+
+\begin{document}
+\title{Peak Brightness Investigation}
+\author{Joe Crone}
+\maketitle
+
+\begin{abstract}
+This document contains an explanation of the methods I have trialed to calculate peak brightness. There is also comparison of my calculations based on example parameters used by F.V. Hartemann et al \cite{hartemann2005high}. Methods of calculating the peak brightness by Serafini et al \cite{curatolo2017analytical} and a modified version of average brightness by K. Deitrick et al \cite{deitrick2018high} have been trialled. I have also narrowed down the possible source of the $\sqrt{2\pi}$ discrepancy between my calculations and Illya's. An explanation of the minimum possible bandwidth for our source and the effect of this is also included. 
+\end{abstract}
+
+\section*{Hartemann Analytical}
+
+The peak brightness calculation Val Kostroun uses in his BrightnessSTD1 Mathematica notebook is very similar to a calculation by F.V. Hartemann et al \cite{hartemann2005high}. The peak brightness $\mathcal{B}_{\mathrm{peak}}$ in cgs units according to Val is given by
+
+\begin{equation}
+\mathcal{B}_{\mathrm{peak}} = \times10^{-11}\cdot\frac{4}{\pi^{2}} \frac{\gamma^{2}}{\varepsilon_{N}^{2}} \frac{N_{e}N_{L}}{\Delta\tau} \frac{r_{0}^{2}}{\sigma_{L}^{2}}\exp\left\{\frac{\chi-1}{2\chi\Delta u_{\perp}^{2}}\left[2+\frac{\delta\omega^{2}+\delta\gamma^{2}\chi^{2}}{2\chi\left(\chi-1\right)\Delta u_{\perp}^{2}}\right]\right\}\left[1-\Phi\left\{\frac{\chi-1}{\sqrt{\delta\omega^{2}+\delta\gamma^{2}\chi^{2}}}\left[1+\frac{\delta\omega^{2}+\delta\gamma^{2}\chi^{2}}{2\chi\left(\chi-1\right)\Delta u_{\perp}^{2}}\right]\right\}\right]\mathcal{F}\left(\eta,\mu\right),
+\label{eq:ValPkBrill}
+\end{equation}
+
+where $\mathcal{F}\left(\eta,\mu\right)$ is the overlap function given by
+
+\begin{equation}
+\mathcal{F}\left(\eta,\mu\right) = \frac{\eta e^{1/\eta^{2}}\left[1-\Phi\left(1/\eta\right)\right]-\mu e^{1/\mu^{2}}\left[1-\Phi\left(1/\mu\right)\right]}{\eta^{2}-\mu^{2}}.
+\label{eq:ValOverlap}
+\end{equation}
+
+The peak brightness according to F.V Hartemann et al \cite{hartemann2005high}, which is in s.i. units, is given by
+
+\begin{equation}
+\mathcal{B}_{\mathrm{peak}} = \frac{4\times10^{-15}}{\pi^{2}} \frac{\gamma^{2}}{\varepsilon_{N}^{2}} \frac{N_{e}N_{L}}{\Delta\tau} \frac{r_{0}^{2}}{\sigma_{L}^{2}}\exp\left\{\frac{\chi-1}{2\chi\Delta u_{\perp}^{2}}\left[2+\frac{\delta\omega^{2}+\delta\gamma^{2}\chi^{2}}{2\chi\left(\chi-1\right)\Delta u_{\perp}^{2}}\right]\right\}\left[1-\Phi\left\{\frac{\chi-1}{\sqrt{\delta\omega^{2}+\delta\gamma^{2}\chi^{2}}}\left[1+\frac{\delta\omega^{2}+\delta\gamma^{2}\chi^{2}}{2\chi\left(\chi-1\right)\Delta u_{\perp}^{2}}\right]\right\}\right]\mathcal{F}\left(\eta,\mu\right),
+\label{eq:HartPkBrill}
+\end{equation} 
+
+where $\mathcal{F}\left(\eta,\mu\right)$ is the overlap function. This has been corrected after a mistake was spotted in transcribing this from (49) to (50) in Hartemann et al's derivation \cite{hartemann2005high}. The corrected overlap function is given by
+
+\begin{equation}
+\mathcal{F}\left(\eta,\mu\right) = \frac{\eta e^{1/\mu^{2}}\left[\Phi\left(1/\eta\right)-1\right]-\mu e^{1/\mu^{2}}\left[\Phi\left(1/\mu\right)-1\right]}{\mu^{2}-\eta^{2}}.
+\label{eq:HartOverlap}
+\end{equation}
+
+In these peak brightness equations (\ref{eq:ValPkBrill}, \ref{eq:HartPkBrill}) $\gamma$ is the Lorentz factor, $N_{e}$ is the number of electrons per bunch, $N_{L}$ is the number of photons per laser pulse, $r_{0} = 2.82\times 10^{-15}$~m is the classical radius of an electron, $\varepsilon_{N}$ is the normalised emittance, $\Delta\tau$ is the electron beam bunch duration and $\sigma_{L}$ is the laser spot size, $\Delta u_{\perp} = \frac{\varepsilon_{N}}{\sigma_{e}}$ is the perpendicular velocity spread with $\sigma_{e}$ the spot size of the electron beam. The normalised frequency spread of the laser is given by $\delta\omega = \frac{\sqrt{2}}{\omega_{0}\Delta t}$, with $\omega_{0}$ the frequency of the laser photons and $\Delta t$ the pulse length of the laser, $\delta\gamma$ is the normalised electron beam energy spread and $\chi = \omega_{x}/ 4\gamma\omega_{0}$, the normalised Doppler up-shifted frequency with $\omega_{x}$ the frequency of the output photon.
+
+The error function $\Phi$ given by
+
+\begin{equation}
+\Phi\left(x\right) = \int_{-\infty}^{\infty} e^{-t^{2}} dt.
+\label{eq:errfunc}
+\end{equation}  
+
+
+The overlap functions (\ref{eq:ValOverlap}, \ref{eq:HartOverlap}) are parameterised by the $\eta$ the normalised inverse $\beta$ function given by
+
+\begin{equation}
+\eta = \frac{k_{f}c\Delta t}{2\sqrt{2}},
+\label{eq:etaparam}
+\end{equation}
+
+where $c$ is the speed of light and $k_{f} = \frac{\varepsilon_{N}}{\gamma\sigma_{e}^{2}}$ is the inverse $\beta$ function, and $\mu$ the normalised inverse Rayleigh length given by
+
+\begin{equation}
+\mu = \frac{c \Delta t}{2\sqrt{2} z_{R}},
+\label{eq:muparam}
+\end{equation}
+ 
+where $z_{R} = \frac{\pi\sigma_{L}}{\lambda}$ is the Rayleigh range, with $\lambda$ the wavelength of the laser.
+
+Equations (\ref{eq:ValPkBrill}) by Val and (\ref{eq:HartPkBrill}) by Hartemann differed via the overlap functions (\ref{eq:ValOverlap},\ref{eq:HartOverlap}) and by a factor of $10^{-4}$, a product of the conversion from s.i. units to cgs units. The overlap functions differed as the exponent of the $\eta$ numerator term is different, $1/\mu^{2}$ in Hartemann's overlap function whereas $1/\eta^{2}$ in Val's overlap function. This appears to be an error in Hartemann's derivation. The denominator is also reversed, however the formulation of the numerator is reversed so this should remain correct. There is also an error, a missing square, in Val's definition of $k_{f}$ the inverse $\beta$ function. 
+
+The difference in these overlap functions appears to be an error in the Hartemann paper \cite{hartemann2005high}. However, to my knowledge there is no published correction to the paper.
+
+Based on the Hartemann calculation (\ref{eq:HartPkBrill}) I created a short script to calculate the peak brightness. To test this script the parameters of the PLEIADES source, which is also used as an example in Hartemann et al \cite{hartemann2005high}, were used. The parameters of this case are shown in Table \ref{tab:exampleparam}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+\hline
+\hline
+\multicolumn{2}{l}{Beam Parameters} \\
+\hline
+Beam Energy & 50~MeV \\
+Bunch Charge & 1~nC \\
+Electron Bunch Duration & 100~fs \\
+Electron Beam Spot Size & 10~$\mu$m \\
+Energy Spread & 10$^{-3}$ \\
+Transverse Emittance & 1 mm-mrad \\
+\hline
+\multicolumn{2}{l}{Laser Parameters} \\
+\hline
+Wavelength & 1~$\mu$m \\
+Laser Pulse Energy & 1~J \\
+Laser Pulse Duration & 5~ps \\
+Laser Spot Size & 20~$\mu$m \\
+\hline
+\hline
+\end{tabular}
+\caption{The example electron beam and laser parameters from the PLEIADES ICS at Lawrence Livermore National Laboratory \cite{brown2004experimental}.}
+\label{tab:exampleparam}
+\end{table}
+
+Based on the parameters in Table \ref{tab:exampleparam}, my calculations using Hartemann's analytical method yielded $\mathcal{B}^{\mathrm{Hartemann}}_{peak} = 3.13\times 10^{21}$~ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW. From the analytical calculation in Hartemann et al \cite{hartemann2005high}, $\mathcal{B}^{\mathrm{Hartemann}}_{peak} = 3.68\times 10^{21}$~ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW and from the 3D code by F.V. Hartemann and W.J. Brown \cite{brown2004three} $\mathcal{B}^{Hartemann}_{peak} = 3.74\times 10^{21}$~ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW. The analytical method has a 1.6\% variance from the 3D code value, this is as this has a better description of non-linear effects. My calculation using Hartemann's method for the PLEIADES source has an error relative to the analytical calculation of $\sim$~15\%. This error is unexplained but could be due to difference of precision in the calculation or a misuse of a parameter.
+
+Using my Mathematica script based on Hartemann's analytical method to calculate the peak brightness of the CBETA ICS yields $\mathcal{B}^{\mathrm{CBETA}}_{peak} = 1.50\times 10^{16}$~ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW. This value is logically correct as the average brightness is smaller, $\mathcal{B}_{avg} = 1.23\times10^{13}$ than the peak brightness. However, it is clearly lower than the $10^{19}$ - $10^{20}$ range usually quoted for peak brightness from linac sources, although this source was designed with a high flux, low bandwidth, low peak brightness and high average brightness in mind.
+
+\section*{Serafini Method}
+To test the efficacy of othe peak brightness calculation methods, a calculation based on L. Serafini et al's method \cite{curatolo2017analytical} was recommended. The peak brightness is given by
+
+\begin{equation}
+\mathcal{B}_{peak} = \frac{\mathcal{N}^{\Psi}}{\left(2\pi\right)^{3}\varepsilon_{\gamma}^{2}\sigma_{t}^{\gamma}\frac{\Delta E_{x}}{E_{x}}\left[0.1\%\right]r},
+\label{eq:SerfPkBrill}
+\end{equation}
+
+where $\sigma_{t}^{\gamma}$ is the rms duration of the emitted photons, $r$ is the repetition rate, $\frac{\Delta E_{x}}{E_{x}}$ is the bandwidth in units of 0.1\%. The emittance of the output radiation is given by $\varepsilon_{\gamma} = \sigma_{s}\frac{\theta{\mathrm{max}}}{\sqrt[4]{12}\sqrt[9]{1+X}}$ with the source size $\sigma_{s} = \frac{\sigma_{e}\sigma_{L}}{\sqrt{\sigma_{e}^{2}+\sigma_{L}^{2}}}$ and $X$ the recoil parameter. The no. photons produced per interaction in an acceptance angle $\Psi = \gamma\theta_{\mathrm{col}}$, $\mathcal{N}^{\Psi}$ is given by
+
+\begin{equation}
+\mathcal{N}^{\Psi} = \sigma_{T}\frac{N_{e}N_{L}\cos\left(\phi/2\right)}{2\pi\sigma_{y}\sqrt{\sigma_{x}^{2}\cos^{2}\left(\phi/2\right)+\sigma_{z}^{2}\sin^{2}\left(\phi/2\right)}}\times \frac{\left(1+\sqrt[3]{X}\Psi^{2}/3\right)\Psi^{2}}{\left[1+\left(1+X/2\right)\Psi^{2}\right]\left(1+\Psi^{2}\right)},
+\label{eqL:SerfFluxBunch}
+\end{equation}
+
+where $\sigma_{T}$ is the Thomson cross section, $\phi$ in this case is the crossing angle of the electron beam and laser pulse and $\sigma_{i}^{2} = \sigma_{i,e}^{2}+\sigma_{i,L}^{2}$ is the convoluted spot size in each plane $i = x,y,z$.  
+   
+It is not possible to use this method directly for the CBETA source because there is no collimation angle $\theta_{\mathrm{col}}$, and therefore no acceptance angle $\Psi$, which satisfies a 0.1\% bandwidth. This is because in conventional inverse Compton sources the bandwidth is ultimately limited by the energy spread of the beam, and this sets a theoretical limit on the bandwidth. The minimum bandwidth of an ICS is explained in the appendix, Section \ref{sec:MTB}.    
+   
+However, (\ref{eq:SerfPkBrill}) seems to suggest that by using our 0.5\%  bandwidth case for the CBETA ICS we can still get the peak brightness. Here I have used my Mathematica notebook for maximum flux in a given bandwidth to calculate the maximum flux in a 0.5\% bandwidth. The results of this are then input into the peak brightness calculation, resulting in
+
+\begin{equation}
+\mathcal{B}_{peak} = \frac{3.66\times 10^{9}}{\left(2\pi\right)^{3}\times \left(2.08\times 10^{-3}\right)^{2}\times 4.33\times 10^{-12}\times 5 \times 325\times 10^{6}}
+\label{eq:CBETASerf}
+\end{equation}   
+
+which evaluates to $\mathcal{B}^{\mathrm{CBETA}}_{peak} = 4.85\times 10^{14}$~ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW. This method assumes that there is a linear relationship between the number of scattered photons and the bandwidth as in (\ref{eq:SerfPkBrill}), $\mathcal{B}_{peak} \propto \frac{\mathcal{N}^{\Psi}}{\frac{\Delta E_{x}}{E_{x}}\left[0.1\%\right]}$ which appears to be false based on previous tuning curve studies. Although, over a small change bandwidth this appears to be a valid approximation.
+
+The Serafini method has not been used to calculate peak brightness for the PLEIADES case as insufficient parameters are given for collimation.
+  
+% Why the bandwidth is limiting this method
+% Why it therefore can't be used
+\section*{Average Brightness Alteration Method}
+
+The average brightness of an inverse Compton source is given by K. Deitrick et al \cite{deitrick2018high} as 
+
+\begin{equation}
+\mathcal{B}_{avg} = \frac{\gamma^{2}F_{0.1\%}}{4\pi^{2}\varepsilon_{N}^{2}},
+\label{eq:KrafftAvgBrill}
+\end{equation}
+
+where $F_{0.1\%} = 1.5\times10^{-3}$ is the flux in 0.1\% BW and all symbols have their aforementioned meaning. This average brightness can be roughly converted into the peak brightness by scaling $F_{0.1\%}$ by the repetition rate $f$ to achieve the number of scattered photons produced per bunch per 0.1\% BW and by dividing by the duration of the emitted photons from one bunch $\sigma_{t}$ i.e changing the time-scale to calculate the brightness over a single interaction. This results in an equation of the form
+
+\begin{equation}
+\mathcal{B}_{peak} = \frac{\gamma^{2}F_{0.1\%}}{4\pi^{2}\varepsilon_{N}^{2}\sigma_{t}f}.
+\label{eq:KrafftPeakBrill}
+\end{equation}
+
+This equation is not directly stated in any of the sources typically used, such as those by Krafft and Serafini. In all of the Krafft inverse Compton source papers $\mathcal{B}_{peak}$ is never calculated. A proportional relationship of a similar form to (\ref{eq:KrafftPeakBrill}) is eluded to in the abstract of Hartemann's paper \cite{hartemann2005high} and it is of very similar form to the formulation by Serafini et al \cite{curatolo2017analytical}. Other authors \cite{pogorelsky2000demonstration,shen2001x} use equations identical to (\ref{eq:KrafftPeakBrill}) although these are more historic sources.    
+
+The peak brightness based on the alteration of the Krafft average brightness has been used to calculate the peak brightness for both the CBETA case and the PLEIADES case. 
+
+For the PLEIADES case a value of $\mathcal{B}_{peak} = 3.85\times 10^{21}$~ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW is calculated, which is a 2.9\% discrepancy from the 3D code value reported in Hartemann. As a reference, Hartemann's analytical method has a 1.6\% discrepancy. The discrepancy in the altered average brightness Krafft method appears to be an absence of the treatment of non-linear effects.
+
+The CBETA source calculation results in a value of $\mathcal{B}^{\mathrm{CBETA}}_{peak}=7.88\times 10^{15}$~ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW. This is a factor of $\sim$~4.47 smaller than the Hartemann analytical calculation for CBETA and a factor $\sim$16 larger than the Serafini CBETA peak brightness.
+   
+% Explanation of how I arrived at my method
+% Source justification for my method
+\section*{$\sqrt{2\pi}$ Discrepancy}
+\label{sec:2pi}
+
+In benchmarking some of my analytical calculations for flux in a certain bandwidth against calculations by Illya Drebot, who uses scripts utilising a CAIN simulation, a factor of $\sqrt{2\pi}$ discrepancy was discovered between the numbers quoted for flux in a 0.5\% bandwidth.
+
+For the comparison of Illya and I's calculation of the flux in a 0.5\% bandwidth a common set of parameters were used, as shown in Table \ref{tab:illyameparam}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+\hline
+\hline
+\multicolumn{2}{l}{Beam Parameters} \\
+\hline
+Beam Energy & 340~MeV \\
+Bunch Charge & 100~pC \\
+Electron Bunch Duration & 3.33~ps \\
+$\beta$ function at the IP (Joe, Illya) & 0.586~m, 0.293~m \\
+Collimation Angle (Joe, Illya) & 0.155~mrad, 0.139~mrad \\
+Transverse Emittance & 0.5 mm-mrad \\
+Electron Beam Energy Spread & 1.9$\times 10^{-3}$ \\
+\hline
+\multicolumn{2}{l}{Laser Parameters} \\
+\hline
+Wavelength & 1.03~$\mu$m \\
+Laser Pulse Energy & 0.1~J \\
+Laser Pulse Duration & 5.7~ps \\
+Laser Spot Size & 25~$\mu$m \\
+Laser Pulse Energy Spread & 6.57$\times 10^{-4}$ \\
+\hline
+\hline
+\end{tabular}
+\caption{The parameters used for the benchmarking calculation between Illya Drebot and I for a head-on ICS. The different $\beta^{*}$, the $\beta$ function at the IP, and $\theta_{\mathrm{col}}$, the collimation angle, arise from the individual optimisations performed by Illya and I for the 0.5\% BW.} 
+\label{tab:illyameparam}
+\end{table}   
+   
+From Illya's CAIN simulation and subsequent calculation based on the CAIN spectrum, Figure \ref{fig:illyaplot} was produced.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{TexImages/pick_photons_plot_v2_.PNG}
+\caption{CAIN spectra (Spectral Density against Scattered Photon Energy) through the collimator of a 0.5\% BW source produced by Illya Drebot from the benchmarking parameters in Table \ref{tab:illyameparam}. The shaded part (blue) of the spectra denotes the section of this spectra within the required 0.5\% bandwidth.}
+\label{fig:illyaplot}
+\end{figure}
+
+Illya quotes a flux of $F_{0.5\%} = 32062$~ph/s through the collimator, with $F_{0.5\%}^{\sigma} = 12875$~ph/s - the photons in the 0.5\% bandwidth. From my analytical calculation a flux of $F^{\sigma}_{0.5\%} = 12098$~ph/s is produced in a 0.5\% bandwidth, borrowing Illya's notation for clarity. In papers from the INFN, Milan group (L. Serafini et al), the number photons through the collimator per second is consistently quoted as the flux for a required bandwidth, not the number of photons per second with energies actually in the required bandwidth.
+
+The relationship between the number of photons in a particular bandwidth and those passing through the collimator for that bandwidth is suggested by the title of Figure \ref{fig:illyaplot} to be $F_{0.5} = \sqrt{2\pi} F^{\sigma}_{0.5\%}$. This appears to be some form of aperture effect from collimation which I have not yet been able to derive.
+
+The calculations in the works of Krafft et al \cite{deitrick2018high} and Serafini et al \cite{curatolo2017analytical} are consistent up to the calculation of head on flux given in both works by 
+
+\begin{equation}
+F = \sigma_{T}\frac{N_{e}N_{L}f}{2\pi\left(\sigma^{2}_{e}+\sigma^{2}_{L}\right)},
+\label{eq:headflux}
+\end{equation}
+
+where $\sigma_{e}$ in this case is the spot size of the electron beam. However, the calculation of the average brightness diverges as seen in a comparison of
+
+\begin{equation}
+\mathcal{B}_{avg} = \frac{\gamma^{2}F_{0.1\%}}{4\pi^{2}\varepsilon_{N}^{2}},
+\label{eq:krafftavg}
+\end{equation}
+
+the Krafft average brightness \cite{deitrick2018high}, and
+
+\begin{equation}
+\mathcal{B}_{avg} = \frac{\mathcal{N}^{\Psi}}{\left(2\pi\right)^{5/2}\varepsilon_{\gamma}^{2}\frac{\Delta E_{x}}{E_{x}}\left[0.1\%\right]},
+\label{eq:serfavg}
+\end{equation}
+
+the Serafini average brightness \cite{curatolo2017analytical}. The $\gamma^{2}$ term in (\ref{eq:krafftavg}) is included in $\varepsilon_{\gamma}$ of (\ref{eq:serfavg}) as this uses the source size. The flux terms are stated slightly differently by $F_{0.1\%}$ for Krafft et al and $\frac{\mathcal{N}_{0.1\%}}{\frac{\Delta E_{x}}{E_{x}}\left[0.1\%\right]}$ for Serafini et al \cite{curatolo2017analytical}, and are calculated differently but attempt to attain the flux in 0.1\% BW. There is also an extra factor of $1/\sqrt{2\pi}$ in the Serafini equation (\ref{eq:serfavg}).
+
+Therefore, as the head-on flux calculation is identical and the main difference in the formation of the average brightness, which uses the collimated flux i.e the flux in a 0.1\% bandwidth, is a factor of $1/\sqrt{2\pi}$ it appears that this arises due to collimation. Providing further evidence that it is the treatment of collimation by the two authors that provides this discrepancy.
+
+In the peak brightness equations constructed from Krafft et al (\ref{eq:KrafftPeakBrill}) and from Serafini et al \cite{curatolo2017analytical} there is a discrepancy in the the equation of $1/2\pi$.  If we take the $\sqrt{2\pi}$ collimation factor difference discussed here between the authors and this $2\pi$ factor between the two formulations we would expect
+
+\begin{equation}
+\mathcal{B}^{\mathrm{Krafft}}_{peak} \approx 2\pi\sqrt{2\pi}\mathcal{B}^{\mathrm{Serafini}}_{peak} \approx 15.75 \mathcal{B}^{\mathrm{Serafini}}_{peak}.
+\label{eq:peakcomp}
+\end{equation}
+
+There is around a factor of $\sim$16 difference between the calculated values for the CBETA case by the two authors methods. Therefore, this is a potential explanation for the difference between the Serafini and altered Krafft calculations of the peak brightness, shows agreement between the two methods and provides further evidence that the $\sqrt{2\pi}$ disagreement between is due to different treatments of collimation.     
+ 
+%APERTURE EFFECT EXPLANATION 
+
+A possible source of this aperture effect is the effect of off-axis collimation as shown diagrammatically in Figure \ref{fig:offaxiscol}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{TexImages/OffAxisCol.png}
+\caption{Diagram of the collimation of an X-ray beam with the electron - laser interaction source size (red), the interaction region of the ICS of radius $\Delta x$ and collimator (grey) of radius $a$ separated by a distance $d$. The X-ray's produced on axis can be produced at a maximum observation angle $\theta_{col}$ and still traverse the collimator, however X-rays produced a distance off-axis can traverse the collimator at a larger angle $\alpha$.}
+\label{fig:offaxiscol}
+\end{figure}
+
+The flux within a certain bandwidth is calculated using an on-axis model. X-rays produced on-axis from the centre of the laser pulse electron beam crossing can traverse the collimator with a maximum observation angle $\theta_{col}$, the collimation angle. However, an X-ray produced with an offset $\Delta x$ from this axis can pass through the collimator with an observation angle $\alpha$ larger that $\theta_{col}$. This is a purely geometrical effect. 
+
+In inverse Compton scattering the energy of the scattered radiation is inversely proportional to the observation angle $\theta$,  ($E_{\gamma} \propto 1/\theta$). Therefore, lower energy photons produced off-axis can pass through the collimator. Because of this only a selection of the collimated photons are within a particular bandwidth. This could be a possible source of the $\sqrt{2\pi}$ discrepancy between calculations and also explain Figure \ref{fig:illyaplot}. As of now I haven't been able to prove mathematically that this is the source of $\sqrt{2\pi}$ but it does explain the presence of photons outside the target bandwidth $\frac{\Delta E_{x}}{E_{x}}$ in the collimated spectrum in Figure \ref{fig:illyaplot}.  
+
+        
+% Explanation of this through the difference between serafini and Krafft methods
+% Example of Illya vs My calculations, agreement with CAIN
+
+% Also need to update my Hartemann calc (write it properly) and sent it with this 
+
+\section*{Summary}
+
+Three different methods of calculating the peak brightness of an inverse Compton source have been compared. Sources of inconsistencies between the methods have been explored. These methods have all been used to calculate the peak brightness of the CBETA ICS, as summarised in Table \ref{tab:CBETAsum}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\hline
+\hline
+Author's Method & $\mathcal{B_{\mathrm{peak}}^{\mathrm{CBETA}}}$ (10$^{15}$ ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW) & Extrapolated $\mathcal{B_{\mathrm{peak}}^{\mathrm{CBETA}}}$ (10$^{15}$ ph/s mm$^{2}$-mrad$^{2}$ 0.1\% BW) \\
+\hline
+Hartemann & 15.0 & 17.3 \\
+Serafini & 0.485 & 7.76 \\
+Krafft & 7.88 & 7.88 \\
+\hline
+\hline
+\end{tabular}
+\caption{Calculations of $\mathcal{B_{\mathrm{peak}}}$, the peak brightness of the CBETA ICS via various authors methods. The extrapolated/corrected values are the CBETA ICS peak brightness values extrapolated with the corrections and discrepancies seen in this document, such as the $2\pi\sqrt{2\pi}$ in Section \ref{sec:2pi} and 15$\%$ variation in the Hartemann calculation.}    
+\label{tab:CBETAsum}
+\end{table}   
+   
+From the results in Table \ref{tab:CBETAsum} it is clear to see that once the factor of $2\pi\sqrt{2\pi}$, the $2\pi$ difference in definition and the $\sqrt{2\pi}$ factor believed to be from the treatment of collimation, is took into account there is agreement between the Krafft and Serafini methods. The Hartemann calculation is around a factor $\sim$~2 different from the Krafft and adjusted Serafini methods, however still in the same order of magnitude.
+
+The Hartemann and Krafft methods do have fundamental differences though as in the Krafft method the incident laser electromagnetic
+field is specified as an input to the calculation through
+the normalized vector potential, the finite pulse
+effects possible in a real laser pulse will be modelled
+properly within a plane-wave approximation \cite{krafft2016laser}. On a more basic note the method by Hartemann et al \cite{hartemann2005high} has no treatment of collimation in its derivation, in fact collimation is not mentioned a single time within this paper. The other methods rely on a scaling from a possible collimation angle (Serafini) or approximate collimation for the plane wave approximation (F$_{0.1\%}$ = 1.5$\times 10^{-3}\cdot F$). The fact these are of the same order of magnitude is a good sanity check but complete agreement would not be expected.     
+
+\section*{Appendix: Minimum Tunable Bandwidth}
+\label{sec:MTB}
+
+The minimum tunable bandwidth for an ICS source is the lowest possible bandwidth a particular inverse Compton source could be tuned to produce for a set of laser and beam parameters. The limiting factor is found as either the electron beam energy spread for conventional laser ICS or the bandwidth of a FEL in FEL driven inverse Compton scattering. This has consequences for previously produced Flux - Bandwidth tuning curves and also explains why some methods of direct calculation of brightness in synchrotron units (ph/s mm$^{2}$-mrad$^{2}$ 0.1\%) is not possible.
+
+This section derives an approximation to the minimum bandwidth of the CBETA source from the bandwidth equation by Krafft et al \cite{ranjan2018simulation}
+
+\begin{equation}
+\frac{\Delta E_{x}}{E_{x}} = \sqrt{\left(\frac{\sigma_{\theta_{\mathrm{col}}}}{E_{\theta_{\mathrm{col}}}}\right)^{2}+\left(\frac{\sigma_{L}}{E_{L}}\right)^{2}+\left(\frac{\sigma_{e}}{E_{e}}\right)^{2}+\left(\frac{\sigma_{\varepsilon}}{E_{\varepsilon}}\right)^{2}},
+\label{eq:KrafftBand}
+\end{equation}
+
+where $\left(\frac{\sigma_{\theta_{\mathrm{col}}}}{E_{\theta_{\mathrm{col}}}}\right)$ is the collimation term, $\left(\frac{\sigma_{L}}{E_{L}}\right)$ is the laser energy spread term, $\left(\frac{\sigma_{e}}{E_{e}}\right)$ is the beam energy spread term and $\left(\frac{\sigma_{\varepsilon}}{E_{\varepsilon}}\right)$ is the emittance term. We can typically adjust the collimation and emittance terms via varying the collimation angle $\theta_{\mathrm{col}}$ and the beta function at the interaction point $\beta^{*}$. These parameters $\beta^{*}$ and $\theta_{\mathrm{col}}$ can be adjusted for any source until the contribution of the collimation and emittance terms is negligible. This can be replicated by taking the limit of (\ref{eq:KrafftBand}) with these terms minimised
+
+\begin{equation}
+\frac{\Delta E_{x}}{E_{x}} \lim_{\left(\frac{\sigma_{\theta_{\mathrm{col}}}}{E_{\theta_{\mathrm{col}}}}\right),\left(\frac{\sigma_{\varepsilon}}{E_{\varepsilon}}\right) \to 0} = \sqrt{\left(\frac{\sigma_{L}}{E_{L}}\right)^{2}+\left(\frac{\sigma_{e}}{E_{e}}\right)^{2}}.
+\label{eq:minemitcol}  
+\end{equation}
+
+We then find that in most cases of ICS, in which a conventional laser is used as the drive laser for inverse Compton scattering that $\left(\frac{\sigma_{L}}{E_{L}}\right) << \left(\frac{\sigma_{e}}{E_{e}}\right)$ and therefore the minimum bandwidth becomes
+
+\begin{equation}
+\frac{\Delta E_{x}}{E_{x}} = \left(\frac{\sigma_{e}}{E_{e}}\right) = \frac{2+X}{1+X+\Psi^{2}}\frac{\Delta E_{e}}{E_{e}} \approx 2\frac{\sigma_{e}}{E_{e}},
+\label{eq:minbeam}
+\end{equation}
+
+where $\frac{\Delta E_{e}}{E_{e}}$ is the energy spread of the electron beam. For the CBETA source this is currently 1.6$\times 10^{-3}$ therefore our minimum bandwidth is $\frac{\Delta E_{x}}{E_{x}} \approx 0.32\%$. As we can't obtain a value below this i.e we can't reach a 0.1\% bandwidth, we can't find a valid acceptance angle for the 0.1\% case so direct calculation of the peak brightness, or in fact the average brightness  by methods in L. Serafini et al \cite{curatolo2017analytical} is not possible.
+
+This also means that the code that I produced previously for the F-BW was incorrect as this produced a tuning curve below this minimum value as can be seen in Figure \ref{fig:CBETAerrtun}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{TexImages/CBETA_FBW_1-10.jpg}
+\caption{Erroneous F-BW tuning curves for the CBETA ICS. The tuning curve extends below the minimum bandwidth of the source.}
+\label{fig:CBETAerrtun}
+\end{figure}
+
+The code to create the tuning curves has now been corrected to avoid this. A single flux value for the bandwidth cases below the minimum limit was erroneously returned and plotted. A catch for this based on the point where the $\beta$  within a loop is not behaving correctly. Tuning curve plots have been reproduced.
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{PkBrill}
+
+\end{document}

@@ -1,0 +1,128 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[margin=0.7in]{caption}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\graphicspath{{images/}}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[page, titletoc, title]{appendix}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,angles,quotes}
+\usepackage{bm}
+\usepackage{outlines}
+
+\begin{document}
+\title{Design and Optimisation of High-Energy Inverse Compton Scattering Sources Driven By Multi-Pass Energy Recovery Linacs}
+% Title may need changing - talk to Hywel
+\author{
+Joe Crone 
+\\2nd Year Progression Report 
+\\Supervised by Dr H. Owen \& Dr B. Muratori 
+\\The Cockcroft Institute \& University of Manchester, Faculty of Science \& Engineering}
+\maketitle
+
+% Statement of own work
+% Covid 19 Preface
+% Summary of Work Accomplished
+% Plan for 3rd Year Work + Thesis plan
+% Unfinished CBETA Journal Paper (gets submitted too)
+
+\section*{Preface: Covid-19}
+
+Covid-19 has disrupted work toward this PhD, however this was minimal. The long term attachment at Cornell University was ended on the 12th March, 13 days before the expected end date and the Cornell campus was closed the previous week. The early end date had no effect on CBETA commissioning as project funding for CBETA had ended by this point.
+
+Progress on the CBETA inverse Compton scattering source (ICS) was affected as in person discussions between Kirsten Deitrick (my Cornell mentor and co-author of the paper) and I about the design of the bypass lattice and writing of the paper were disrupted and ended abruptly. 
+
+\section*{Introduction}
+
+Energy recovery Linacs (ERLs) are ideal drivers of inverse Compton scattering sources (ICS) due to the combination of linac quality beams and high repetition rate, allowing production of a tunable high-flux, narrowband scattered photon beam. The pioneering demonstration of multi-pass energy recovery in a superconducting RF (SRF) linac with FFAG return loop at the Cornell University Brookhaven National Laboratory Energy Recovery Linac Test Accelerator (CBETA) reveals a route to high energy electron beams for ERL driven ICS production of X-rays and $\gamma$-rays.
+
+Due to a $E_{\gamma} \propto 4\gamma^{2}$ scattered photon energy $E_{\gamma}$ dependence, where $\gamma$ is the Lorentz factor, ICS is the prime candidate for production of high energy photons above photon energies available at conventional X-ray production facilities such as Free Electron Lasers (FEL)($E_{\gamma} <$~25~keV \cite{schneidmiller2011photon}) and the largest synchrotrons ($E_{\gamma} <$~500~keV). Therefore, inverse Compton scattering sources are also the eminent method for high-flux production of $\gamma$-rays ($E_{\gamma} \sim$~1~MeV), which could support applications like nuclear resonance fluorescence (NRF) and nuclear photonics. ICS sources can be optimised to produce photons in smaller natural bandwidth than synchrotron radiation, alleviating the need for monochromators which inherently deplete the flux of the source. 
+
+Experience gained this year from participating in CBETA commissioning and designing an X-ray ICS utilizing CBETA will ultimately motivate design choices and optimisations for an inverse Compton source operating on the posited Daresbury Industrial Accelerator for Nuclear Physics Applications (DIANA) ERL. The design values for the CBETA ICS are 9.28$\times 10^{8}$~ph/s in a 0.5\% bandwidth up to a maximum photon energy of 401.4~keV. In comparison, the DIANA $\gamma$-ray source will be capable of producing $~10^{11}$~ph/s in a 0.5\% bandwidth with scattered photon energies in the 1-20~MeV range, competitive with the flagship ELI-NP-GBS \cite{adriani2014technical} linac based inverse Compton scattering source.    
+
+\section*{Summary of 2nd Year Work}
+
+\subsection*{CBETA Commissioning}
+
+A Long Term Attachment (LTA) at Cornell University facillitated participation in the multi-pass commissioning of CBETA. Experience was gained in tuning the splitter and recombiners of the first two passes of the ERL. CBETA commissioning also provided training in setting up the injector and main linac cryomodules, and running simple accelerator control and measurement scripts such as dispersion and orbit correction.       
+
+Commissioning experience exposed difficulties in operating accelerators in general, such as energy drifts, and obstacles unique to ERLs, like the requirement for precise control of path length correction. As well as this, understanding challenges unique to CBETA commissioning including the effect of stray fields and challenges posed by common transport, which involves accelerating and decelerating beams in a shared beamline, could contribute to plans for future ERLs. 
+
+
+As a secondary operator, both a control and measurement script were devised. This acted as an introduction to accelerator control and measurement systems. Understanding the complexities of measurement and control of an ERL is informative toward designing sources which are easier to operate than CBETA and may avoid it's pitfalls. For example, multi-turn ERL's require substantial forethought when writing measurement scripts as altering the machine can have a knock-on effect on both previous and future passes; common transport such as the FFAG return loop and splitter lines of CBETA further exacerbate this difficulty.
+
+The control script was a pyEPICS based degauss all magnets function designed to mitigate hysteresis in CBETA's electromangnets. The degauss all magnets script varies the current of the main accelerator magnets (excluding the injector and merger magnets) and permanent magnet corrector coils as prescribed by a degaussing procedure used for the LCLS injector \cite{weidemann2010degaussing}. The degaussing script performed well and was subsequently used within other control and measurement scripts. 
+
+A chromaticity script was constructed to measure the chromaticity per cell, in both planes, of sections of the accelerator, such as the FFAG recirculation line and splitter/recombiner sections, for all 4 turns. Chromaticity measurement was accomplished by recursively applying a modified version of an existing script used to measure tune in sections of the machine whilst incrementing the beam energy through adjustment of cavity 1 voltage (the cavity traversed last by an accelerated beam). Unfortunately, this script was only tested on the last day of operation; due to energy drift in the linac only measurements up to the second turn produced usable data when this was compared to the expected tune produced from fieldmaps.
+
+With CBETA's FFAG common transport, which involves multiple energy accelerating and decelerating beams in a shared beamline, optics are coupled for each energy and for both the accelerating and decelerating passes. This causes numerous difficulties in tuning the accelerator optics as adjusting an accelerating pass via the splitter simultaneously adjusts a decelerating pass and any adjustment of the FFAG alters every pass. Therefore, tuning can only really be accomplished with the splitter lines on accelerating passes up to the highest energy 150 MeV pass -- decelerating passes are not tunable directly. Measurement and control are also complicated by common transport, for example whilst performing a quadrupole scan to measure a response matrix for an orbit correction, the variation in quadrupole strength affects the optics of the previous pass via stray fields. Practical insight into operating a multi-pass common transport ERL is valuable for design decisions regarding optics in ERL's and their applications.
+
+\subsection*{CBETA Inverse Compton Source}
+
+An inverse Compton source has been designed to produce high-energy X-rays from the 4th pass (150~MeV) electron beam, the highest nominal beam energy of the CBETA ERL. The CBETA ICS would be capable of producing X-rays up to 400~keV, close to the photon energy limit of large synchrotrons. The CBETA ICS is competitive in terms of flux with large scale synchrotron facilities such as Spring-8 in this scattered photon energy domain producing $\sim 10^{9}$~ph/s within a 0.5\% bandwidth. Output parameters of the CBETA ICS highlight the photon energy interface where conventional X-ray production facilities are succeeded by inverse Compton scattering sources.
+
+Design of a bypass lattice offset vertically from the 4-pass configuraton of CBETA is required due to spatial requirements of an ICS interaction point. The bypass diverts the electron beam after the 4th accerating pass of the linac via a vertical dogleg in the splitter and focuses the beam at the ICS interaction point through a flexible final focus system ($\beta^{*}$ = 1-12~cm demonstrated, as set by optimisation). After the interaction, the bypass performs path length correction of the electron beam with a maximum range of a single RF wavelength either side of the nominal solution -- more than sufficient for energy recovery and also corrects the $R_{56}$ of the electron beam. The bypass maintains the same Twiss parameter and zero dispersion match into the 1st decelerating pass of the linac; recovering the matching conditions of the standard 4th pass.
+
+Lattice design challenges of an ERL ICS such as space considerations for an interaction point, extraction of an X-ray beam and optics matching considerations have become clear. Whilst avoided in the current 150MeV bypass configuration, implementing an ICS or an ICS bypass into a common transport beamline such as the lower passes of CBETA would prove challenging optically as constraints on both the accelerating and decelerating beams would have to be satisfied and the IP would need to be designed to accommodate both beams. Common transport is a potential obstacle to ICS facilities utilizing each nominal energy of a common transport multi-turn ERL.  
+
+Electron beam parameters were set for the ICS operational mode based on the design parameters of CBETA. Laser pulse and re-circulation cavity parameters were chosen based on the most recent demonstration of an ERL based inverse Compton scattering source at cERL \cite{akagi2016narrow} and the state of the art demonstration of an optical re-circulation cavity \cite{carstens2014megawatt}. Parameters such as the beta function at the IP and collimation angles were optimised through the bandwidth tuning algorithm detailed in the next section. Output spectral parameters have been calculated analytically using the source parameters. A journal paper specifying the CBETA ICS design is in progress, with the majority of the source design and calculation aspects finalised.
+  
+
+\subsection*{ICS Bandwidth Tuning}
+
+% Why do we want a small bandwidth source??
+Small bandwidth ($<$~1\%) scattered photon beams are advantageous because a smaller energy spread of the photon beam increases precision of measurements; some experiments like parametric down conversion \cite{eisenberger1971x} and Non-resonant Inelastic  X-ray  Scattering (NIXS) require small bandwdith. Small bandwidth photon beams can also avoid the use of monochromators and simplify the X-ray/$\gamma$-ray optics required for experiments. High flux is also necessary to observe rare processes and improve the counting statistics of experiments. A trade-off detailed here can be performed to maximise the flux of an ICS in a selected bandwidth.  
+
+A method has been devised, based on the scaling laws by N. Ranjan et  al \cite{ranjan2018simulation}, to optimise an inverse Compton source by the $\beta$ function at the interaction point $\beta^{*}$ and the collimation angle $\theta_{\mathrm{col}}$ so that the ICS satisfies a user determined bandwidth requirement. Used in conjunction with a method by L. Serafini et al \cite{curatolo2017analytical} to calculate the collimated flux in a given collimation angle, a bandwidth tuning algorithm has been created to optimise an ICS to the user defined bandwidth and calculate the maximal flux in this bandwidth whilst returning the $\beta^{*}$ and $\theta_{\mathrm{col}}$ parameters for this case.
+
+The bandwidth tuning algorithm has been used to produce tuning curves for the bandwidth and flux in selected bandwidth for both the CBETA ICS and the posited DIANA ERL ICS. It has been discovered that the minimum bandwidth of an inverse Compton source is dependent on the energy spread of the electron beam and that in the Thomson regime, where the photon -- electron interaction can be modelled as an elastic collision i.e. the recoil of the electron is negligible, the tuning curves are independent of beam energy.
+
+
+The method of calculating the maximal collimated flux in a selected bandwidth has been benchmarked against simulations by Illya Drebot for the same purpose. The calculation was based on a high intensity laser, single-shot version of the proposed 340~MeV pass of the DIANA ICS and calculated collimated flux in a 0.5\% bandwidth. The methods differ as Illya's method uses Conglom\'{e}rat d’ABEL et d’Interactions Non-Lin\'{e}aires (CAIN) \cite{chen1995cain}, a Monte Carlo simulation code, to calculate the collimated flux whereas my method is purely analytical. The optimisation methods also appear to differ although I am not aware of the exact details of Illya's bandwidth optimisation. The calculation of flux in a 0.5\% bandwidth differed by $\sim$~6\% between methods, which is considered to be a good agreement as both the optimisation and the collimated flux calculation differed.
+
+\section*{Future Work and Thesis Plan}
+
+\subsection*{Analytical Spectrum}
+
+It would be advantageous to study the effect of emittance, energy spread and other laser pulse and electron beam parameters on ICS output by observing their effect on the scattered photon spectrum. The ICS spectrum can be produced analytically \cite{sun2009energy}, analytically using a tracked particle bunch in the Improved Code for Compton Scattering (ICCS) \cite{ranjan2018simulation} or via Monte Carlo simulation in CAIN. These spectrum production methods should be compared against each other to validate their use in high repetition rate inverse Compton sources as these are typically applied to the high intensity laser and low repetition rate linac driven scenario. Spectra could be used to validate the analytical calculations of the output source parameters and investigations into the effect of accelerator and laser parameters on the spectra could inspire further optimisation methods. 
+
+A spectrum for the CBETA ICS has been produced via CAIN, however CAIN suffers from an inability to properly simulate recirculated ICS and poor statistics in the tails of the distribution or at very narrow apertures \cite{ranjan2018simulation}. Collimation is not included in CAIN spectra produced so far, which should be rectified. 
+
+Work is ongoing into replicating C. Sun et al's \cite{sun2009energy} model which will be benchmarked against the results from C. Sun's paper and Krafft et al's paper \cite{ranjan2018simulation}, which simulates an identical scenario. 
+
+\subsection*{DIANA inverse Compton Scattering Source}
+
+Design investigations into a $\gamma$-ray ICS for the proposed DIANA multi-pass ERL will continue. Preliminary calculations have been performed for an ICS in the 1st Year of the PhD, which can be extended and improved using experience from the CBETA ICS design, for example the optimisation code developed this year can be applied and calculations can be extended to include collimation.
+ 
+Spectra could also be produced for the DIANA ICS once the analytical spectrum code is operational. Spectra can be produced for each nominal energy for a variety of laser pulse and electron beam parameters which would enable investigations into possible designs for the ICS and some optimisation of parameters such as bunch length, emittance and energy spread which could inform design choices for the ERL.  
+
+\subsection*{Thesis Plan}
+% NEEDS SOME FORM OF TIMELINE AND IMPROVEMENT
+
+A provisional timescale for the write-up of the thesis is shown in Fig. \ref{fig:timescale}. The chapter headings for the thesis are:
+
+\begin{outline}
+\1{Introduction}
+\1{Theory of Photon Production by Inverse Compton Scattering}
+\1{CBETA Inverse Compton Source Design}
+\1{DIANA Inverse Compton Source Design}
+\1{CBETA Multi-pass Commissioning}
+\1{Conclusions}
+\end{outline}
+
+\begin{figure}
+\includegraphics[scale=0.9]{TexImages/Thesis_timescale.png}
+\caption{Timescale for the write-up of the thesis.}
+\label{fig:timescale}
+\end{figure}
+
+%\newpage
+\bibliographystyle{unsrt}
+\bibliography{Yr2bib}
+
+\end{document}

@@ -1,0 +1,63 @@
+\begin{thebibliography}{10}
+
+\bibitem{berestetskii1982quantum}
+Vladimir~Borisovich Berestetskii, Evgenii~Mikhailovich Lifshitz, and
+  Lev~Petrovich Pitaevskii.
+\newblock {\em Quantum {E}lectrodynamics: {V}olume 4}, volume~4.
+\newblock Butterworth-Heinemann, 1982.
+
+\bibitem{curatolo2017analytical}
+C~Curatolo, I~Drebot, V~Petrillo, and L~Serafini.
+\newblock Analytical description of photon beam phase spaces in inverse compton
+  scattering sources.
+\newblock {\em Physical Review Accelerators and Beams}, 20(8):080701, 2017.
+
+\bibitem{krafft2010compton}
+Geoffrey~A Krafft and Gerd Priebe.
+\newblock Compton sources of electromagnetic radiation.
+\newblock {\em Reviews Of Accelerator Science And Technology: Volume 3:
+  Accelerators as Photon Sources}, pages 147--163, 2010.
+
+\bibitem{ranjan2018simulation}
+N~Ranjan, B~Terzi{\'c}, GA~Krafft, V~Petrillo, I~Drebot, and L~Serafini.
+\newblock Simulation of inverse compton scattering and its implications on the
+  scattered linewidth.
+\newblock {\em Physical Review Accelerators and Beams}, 21(3):030701, 2018.
+
+\bibitem{mandelstam1958determination}
+Stanley Mandelstam.
+\newblock Determination of the pion-nucleon scattering amplitude from
+  dispersion relations and unitarity. general theory.
+\newblock {\em Physical Review}, 112(4):1344, 1958.
+
+\bibitem{sun2009characterizations}
+Changchun Sun.
+\newblock {\em Characterizations and {D}iagnostics of {C}ompton {L}ight
+  {S}ource}.
+\newblock PhD thesis, Duke University, 2009.
+
+\bibitem{grozin2002complete}
+AG~Grozin.
+\newblock Complete analysis of polarization effects in $e^{-} \gamma
+  \rightarrow e^{-} \gamma$ with {REDUCE}.
+\newblock {\em arXiv preprint hep-ph/0209360}, 2002.
+
+\bibitem{suzuki1976general}
+Toshio Suzuki.
+\newblock General formulae of luminosity for various types of colliding beam
+  machines.
+\newblock Technical report, National Lab. for High Energy Physics, 1976.
+
+\bibitem{miyahara2008luminosity}
+Yoshikazu Miyahara.
+\newblock Luminosity of angled collision of strongly focused beams with
+  different gaussian distributions.
+\newblock {\em Nuclear Instruments and Methods in Physics Research Section A:
+  Accelerators, Spectrometers, Detectors and Associated Equipment},
+  588(3):323--329, 2008.
+
+\bibitem{siegmann1986lasers}
+Anthony~E Siegmann.
+\newblock Lasers, univ. sc. book, 1986.
+
+\end{thebibliography}

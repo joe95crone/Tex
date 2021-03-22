@@ -1,0 +1,231 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage[margin=0.7in]{caption}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\graphicspath{{images/}}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[page, titletoc, title]{appendix}
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,angles,quotes}
+\usepackage{bm}
+
+
+\begin{document}
+\title{Collimated Flux Derivation}
+\author{Joe Crone}
+\maketitle
+
+\begin{abstract}
+Here I derive a methodology to calculate the collimated flux of an inverse Compton scattering source. The derivation is from first principles, using the work of Berestetskii et al \cite{berestetskii1982quantum}. This method is valid for the angular crossing case ($\phi \neq 0$). The collimated flux calculation presented here is benchmarked against the collimated flux equation of Curatolo et al \cite{curatolo2017analytical}, an approximation based on Krafft and Priebe \cite{krafft2010compton}, \textsc{ICCS3D} \cite{ranjan2018simulation} simulations and \textsc{ICARUS} simulations. Benchmarking is contained within the CollimatedFluxInvestigation.nb \textsc{Mathematica 11.2} notebook.
+\end{abstract}
+
+\section{General Recoil-Corrected Derivation of Cross Section}
+
+The interaction of an electron with a photon is fully described by the four-momenta equation
+
+\begin{equation}
+p_{1} + k_{1} = p_{2} + k_{2},
+\label{eq:electronphotoninteraction}
+\end{equation} 
+
+where $p_{1} = \gamma m_{e}\left(c,\bm{v_{i}}\right)$ and $p_{2} = \gamma' m_{e}\left(c,\bm{v_{f}}\right)$ are the initial and final four-momenta of the electron, with $\gamma$ and $\gamma'$ the Lorentz factors of the incident and final electron and $\bm{v_{i/f}}$ the three-momenta of the incident ($i$) and final ($f$) electron and $k_{1} = \frac{E_{L}}{c}\left(1,\bm{n_{i}}\right)$ and $k_{2} = \frac{E_{\gamma}}{c}\left(1,\bm{n_{f}}\right)$ are the four-momenta of the incident and scattered photon, with $E_{L}$ the energy of the incident photon and $E_{\gamma}$ the energy of the scattered photon and $n_{i/f}$ the unit three-vectors of the incident ($i$) and scattered ($f$) photon.
+
+The interaction in (Eq. \ref{eq:electronphotoninteraction}) can be further quantified by defining a set kinematic variables \cite{berestetskii1982quantum} (Mandelstam variables \cite{mandelstam1958determination}) 
+
+\begin{align}
+s = \left(p_{1}+k_{1}\right)^{2} = \left(m_{e}c\right)^{2}+2p_{1}\cdot k_{1}, 
+\label{eq:sMandelstam} \\
+u = \left(p_{1}-k_{2}\right)^{2} = \left(m_{e}c\right)^{2}-2p_{1}\cdot k_{2}, 
+\label{eq:uMandelstam} \\
+t = \left(p_{1}-p_{2}\right)^{2} = 2\left[\left(m_{e}c\right)^{2}-p_{1}\cdot p_{2}\right],
+\label{eq:tMandelstam}
+\end{align}   
+
+where $s, t, u$ originate from the cross-channels of a general reaction of the form of (Eq.~\ref{eq:electronphotoninteraction}). The centre of mass energy is given by $\sqrt{s}$, $t$ is symbolic of the momentum transfer of the reaction and $u$ is difficult to reduce to a simple meaning. The Mandelstam variables (Eq.~\ref{eq:sMandelstam}-\ref{eq:tMandelstam}) can then be used to construct two Lorentz invariant quantities
+
+\begin{align}
+X = \frac{s-\left(m_{e}c\right)^{2}}{\left(m_{e}c\right)^{2}}, 
+\label{eq:Xrec} \\
+Y = \frac{\left(m_{e}c\right)^{2}-u}{\left(m_{e}c\right)^{2}}, 
+\label{eq:Y}
+\end{align}
+
+where $X$ is the well known recoil parameter. We can further define the Lorentz invariants (Eq.~\ref{eq:Xrec}-\ref{eq:Y}) for the generalised geometry of an interaction. The simplified geometry of the electron - photon interaction in the $x$-$z$ plane is shown in Fig.~\ref{fig:scatteringdiagram}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{TexImages/scatteringkinematicsdiagram.pdf}
+\caption{Inverse Compton scattering geometry. The incident electron with 4-momenta $p_{1}$ and energy $E_{e}$ is interacted with the incident photon with 4-momenta $k_{1}$, energy $E_{\mathrm{laser}}$ and crossing angle $\phi$  ($\phi' = \pi - \phi$). The scattering process scatters a photon with 4-momenta $k_{2}$ with energy $E_{\gamma}$ at an angle $\theta = \theta_{f}$ and recoils the electron with 4-momenta $p_{2}$. The angle between the incident and scattered photon is given by $\theta'=\pi-\phi-\theta$.} 
+\label{fig:scatteringdiagram}
+\end{figure} 
+
+Substituting the result of (Eq.~\ref{eq:sMandelstam}) into (Eq.~\ref{eq:Xrec}) yields
+
+\begin{gather*}
+X = \frac{\left(m_{e}c\right)^{2}+2p_{1}\cdot k_{1}-\left(m_{e}c\right)^{2}}{\left(m_{e}c\right)^{2}} = \frac{2p_{1}\cdot k_{1}}{\left(m_{e}c\right)^{2}}, \\
+p_{1}\cdot k_{1} =\frac{\gamma m_{e}E_{L}}{c}\left(c-\bm{v_{i}}\cdot \bm{n_{i}}\right) = \gamma m_{e}E_{L}\left(1-\bm{\beta}\cdot\bm{n_{i}}\right), \\
+p_{1}\cdot k_{1} = \gamma m_{e}E_{L}\left(1-\beta\cos\phi'\right) = \gamma m_{e}E_{L}\left(1+\beta\cos\phi\right),
+\end{gather*}
+\begin{equation}
+X = \frac{2\gamma E_{L}\left(1+\beta\cos\phi\right)}{m_{e}c^{2}},
+\label{eq:Xang}
+\end{equation}
+where $\beta = v/c$ is the Lorentz speed factor. We see that the recoil parameter $X$ has no dependence on the scattering angle $\theta$, as expected from (Eq.~\ref{eq:sMandelstam}). 
+
+Similarly, by substitution of (Eq.~\ref{eq:uMandelstam}) into (Eq.~\ref{eq:Y}) we yield
+
+\begin{gather*}
+Y = \frac{\left(m_{e}c\right)^{2}-\left(m_{e}c^{2}\right)^{2}+2p_{1}\cdot k_{2}}{\left(m_{e}c\right)^{2}} = \frac{2p_{1}\cdot k_{2}}{\left(m_{e}c\right)^{2}}, \\
+p_{1}\cdot k_{2} = \frac{\gamma m_{e}E_{\gamma}}{c}\left(c-\bm{v_{i}}\cdot\bm{n_{f}}\right) = \gamma m_{e}E_{\gamma}\left(1-\bm{\beta}\cdot\bm{n_{f}}\right), \\
+p_{1}\cdot k_{2} = \gamma m_{e}E_{\gamma}\left(1-\beta\cos\theta\right),
+\end{gather*}
+\begin{equation}
+Y = \frac{2\gamma E_{\gamma}\left(1-\beta\cos\theta\right)}{m_{e}c^{2}}.
+\label{eq:Yang}
+\end{equation}
+
+In the generalized, recoil corrected, angular crossing case as shown diagrammatically in Fig.~\ref{fig:scatteringdiagram}, the scattered photon energy $E_{\gamma}$ is given by
+
+\begin{equation}
+E_{\gamma} = \frac{\left(1+\beta\cos\phi\right)E_{L}}{1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}},
+\label{eq:scatteredphotonenergy}
+\end{equation} 
+with $E_{e} = \gamma m_{e}c^{2}$, the total energy of the electron. This has been derived within my thesis document and is available on request, but not shown here for brevity. The full $\theta$ dependence of $Y$ is demonstrated by subbing (Eq.~\ref{eq:scatteredphotonenergy}) into (Eq.~\ref{eq:Yang}) and simplifying using the recoil parameter (Eq.~\ref{eq:Xang})
+
+\begin{equation}
+Y = \frac{2\gamma E_{L}\left(1+\beta\cos\phi\right)\left(1-\beta\cos\theta\right)}{m_{e}c^{2}\left\{1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}\right\}} = \frac{X\left(1-\beta\cos\theta\right)}{1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}}.
+\label{eq:Ytheta}
+\end{equation}
+
+The derivative of $Y$ with $\theta$ can then be found via the quotient rule
+
+\begin{gather}
+Y\left(\theta\right) = \frac{g\left(\theta\right)}{h\left(\theta\right)}, \\
+\frac{dY\left(\theta\right)}{d\theta} = \frac{g'\left(\theta\right)h\left(\theta\right)-g\left(\theta\right)h'\left(\theta\right)}{\left[h\left(\theta\right)\right]^{2}},
+\label{eq:quotientrule}
+\end{gather}
+where the terms in (Eq.~\ref{eq:quotientrule}) are given by
+\begin{gather}
+g\left(\theta\right) = X\left(1-\beta\cos\theta\right), \\
+g'\left(\theta\right) = X\beta\sin\theta, \\
+h\left(\theta\right) = 1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}, \\
+h'\left(\theta\right) = \beta\sin\theta-\sin\left(\phi+\theta\right)E_{L}/E_{e}.
+\label{eq:quotientterms}
+\end{gather}
+The full derivative of $Y$ by $\theta$ is therefore
+\begin{equation}
+\frac{dY}{d\theta} = \frac{X\beta\sin\theta\left\{1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}\right\}-X\left(1-\beta\cos\theta\right)\left[\beta\sin\theta-\sin\left(\phi+\theta\right)E_{L}/E_{e}\right]}{\left\{1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}\right\}^{2}}.
+\label{eq:dYdtheta}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.8]{TexImages/SunPolarisationScatteringDiagram.png}
+\caption{Left: The 3D scattering geometry of the electron - photon interaction by C. Sun \cite{sun2009characterizations}. Here $\phi_{f}$ is the azimuthal angle of the scattered photon and $\tilde{x}, \tilde{y}, \tilde{z}$ define the co-ordinate system of the incident electron and the notation is varied $p = p_{1}$, $k = k_{1}$ and $k' = k_{2}$. Right: Interaction polarisation diagram by C. Sun \cite{sun2009characterizations}. Here $\tau$ is the azimuthal angle of the polarization vector $\epsilon$.}
+\label{fig:sungeometry}
+\end{figure}
+
+Fig.~\ref{fig:sungeometry} shows the full 3D geometry of the interaction, which includes a polarisation diagram. Following Eq. (2.27) by Sun \cite{sun2009characterizations}, we can then use a standard result from QED for the cross section of the interaction of unpolarised electron beam and polarised laser pulse, without considering the post-interaction polarisations \cite{grozin2002complete} 
+
+\begin{equation}
+\frac{d\sigma}{dYd\phi_{f}} = \frac{4r_{e}^{2}}{X^{2}}\left\{\left(1-\xi_{3}\right)\left[\left(\frac{1}{X}-\frac{1}{Y}\right)^{2}+\frac{1}{X}-\frac{1}{Y}\right]+\frac{1}{4}\left(\frac{X}{Y}+\frac{Y}{X}\right)\right\},
+\label{eq:DiffCrossYphif}
+\end{equation}
+
+where $\phi_{f}$ is the azimuthal angle of the scattered photon, $r_{e}$ is the classical electron radius, $X$ and $Y$ are the Lorentz invariants in (Eq. \ref{eq:Xrec}, \ref{eq:Y}) and $\xi_{3}$ is the Stokes parameter, describing linear polarisation in the $x$ or $y$ axis, given by
+
+\begin{equation}
+\xi_{3} = -P_{t}\cos\left(2\tau-2\phi_{f}\right),
+\label{eq:Stokes3}
+\end{equation} 
+
+with $0 \leq P_{t} \leq 1$, the degree of linear polarisation and $\tau$ the azimuthal angle of the polarisation vector. 
+
+We can then integrate over the azimuthal scattering angle $\phi_{f}$
+
+\begin{equation}
+\frac{d\sigma}{dY} = \frac{4r_{e}^{2}}{X^{2}}\int_{0}^{2\pi}\left[1+P_{t}\cos\left(2\tau-2\phi_{f}\right)\right]\left\{\left(1-\xi_{3}\right)\left[\left(\frac{1}{X}-\frac{1}{Y}\right)^{2}+\frac{1}{X}-\frac{1}{Y}\right]+\frac{1}{4}\left(\frac{X}{Y}+\frac{Y}{X}\right)\right\} d\phi_{f}, 
+\label{eq:phifintegral}
+\end{equation}
+
+We can then take the case of an unpolarised laser pulse or a circular laser pulse ($P_{t} = 0$), or acknowledge that this polarisation effect is minimal for our purposes, to simplify this to
+
+\begin{equation}
+\frac{d\sigma}{dY} = \frac{8\pi r_{e}^{2}}{X^{2}}\left\{\left[\left(\frac{1}{X}-\frac{1}{Y}\right)^{2}+\frac{1}{X}-\frac{1}{Y}\right]+\frac{1}{4}\left(\frac{X}{Y}+\frac{Y}{X}\right)\right\},
+\label{eq:BerestetskiiForm}
+\end{equation}
+
+which replicates the form in Eq. (86.16) by Berestetskii et al \cite{berestetskii1982quantum}.
+
+The dependence of the cross section $\sigma$ upon the scattering angle $\theta$ can be found using the chain rule
+\begin{equation}
+\frac{d\sigma}{d\theta} = \frac{d\sigma}{dY}\frac{dY}{d\theta}.
+\label{eq:chainrule}
+\end{equation}
+Therefore, the cross section for a collimation angle $\theta_{\mathrm{col}}$ becomes
+\begin{equation}
+\sigma\left(\theta_{\mathrm{col}}\right) = \int_{0}^{\theta_{\mathrm{col}}}\frac{d\sigma}{dY}\frac{dY}{d\theta}d\theta,
+\label{eq:crosssectionintegral}
+\end{equation} 
+where $\frac{d\sigma}{dY}$ is given by (Eq.~\ref{eq:BerestetskiiForm}) and $\frac{dY}{d\theta}$ is given by (Eq.~\ref{eq:dYdtheta}). The full cross section calculation is summarised as
+\begin{multline}
+\sigma\left(\theta_{\mathrm{col}}\right) = \int_{0}^{\theta_{\mathrm{col}}} \frac{8\pi r_{e}^{2}}{X^{2}}\left\{\left[\left(\frac{1}{X}-\frac{1}{Y}\right)^{2}+\frac{1}{X}-\frac{1}{Y}\right]+\frac{1}{4}\left(\frac{X}{Y}+\frac{Y}{X}\right)\right\}\\\frac{X\beta\sin\theta\left\{1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}\right\}-X\left(1-\beta\cos\theta\right)\left[\beta\sin\theta-\sin\left(\phi+\theta\right)E_{L}/E_{e}\right]}{\left\{1-\beta\cos\theta+\left[1+\cos\left(\phi+\theta\right)\right]E_{L}/E_{e}\right\}^{2}}d\theta,
+\label{eq:fullcrosssectionintegral}
+\end{multline}
+where $Y, X, E_{\gamma}$ are of the forms in (Eq.~\ref{eq:Yang},~\ref{eq:Xang},~\ref{eq:scatteredphotonenergy}).
+
+\section{General Recoil-Corrected Derivation of Collimated Flux}
+
+The collimated flux $\mathcal{F}_{\mathrm{col}}$ can be calculated by
+\begin{equation}
+\mathcal{F}_{\mathrm{col}} = \sigma\left(\theta\right)R_{AC}\mathcal{L}f,
+\label{eq:collimatedflux}
+\end{equation}    
+where $\sigma\left(\theta_{\mathrm{col}}\right)$ is the scattering angle dependent cross section in (Eq.~\ref{eq:fullcrosssectionintegral}), $R_{AC}$ is the angular crossing luminosity reduction factor, as defined by T. Suzuki \cite{suzuki1976general} and Y. Miyahara \cite{miyahara2008luminosity}
+\begin{equation}
+R_{AC} = \frac{\sigma_{x}\cos\phi}{\sqrt{\sigma_{x}^{2}\cos^{2}\phi+\sigma_{z}^{2}\sin^{2}\phi}} = \frac{1}{\sqrt{1+\left(\sigma_{z}^{2}/\sigma_{x}^{2}\right)\tan^{2}\phi}},
+\label{eq:angularcrossingreductionfactor}
+\end{equation}
+where $\sigma_{i}\left(i=x,y,z\right) = \sqrt{\sigma_{i,e}^{2}+\sigma_{i,L}^{2}}$ is the convoluted \textit{rms} spot size of the electron bunch $\sigma_{i,e}$ and laser pulse $\sigma_{i,L}$, $\mathcal{L}$ is the head-on luminosity of the collision
+\begin{equation}
+\mathcal{L} = \frac{N_{e}N_{L}}{2\pi\sigma_{x}\sigma_{y}},
+\end{equation}
+where $N_{e}$ is the number of electrons in a bunch and $N_{L}$ is the number of photons in the laser pulse, and $f$ is the repetition rate of the interaction.
+
+In the case where the transverse divergences of the electron bunch and laser pulse are non-negligible over the course of the interaction, the hourglass effect arises. The electron bunch and/or laser pulse diverge within the interaction time, which in turn increases the bunch and pulse spot sizes and reduces the luminosity. The hourglass effect can be correctly accounted for in (Eq.~\ref{eq:collimatedflux}) by replacing $R_{AC}$, the angular crossing luminosity reduction factor by $R_{ACHG}$, the combined angular crossing and hourglass effect luminosity reduction factor, as defined by Y. Miyahara \cite{miyahara2008luminosity}. The collimated flux $\mathcal{F}_{\mathrm{col}}$ becomes   
+\begin{equation}
+\mathcal{F}_{\mathrm{col}} = \sigma\left(\theta_{\mathrm{col}}\right)R_{ACHG}\mathcal{L}f,
+\label{eq:collimatedfluxhourglass}
+\end{equation}
+where $R_{ACHG}$ is the combined angular crossing and hourglass effect luminosity reduction factor given by
+\begin{equation}
+R_{ACHG} = \int_{-\infty}^{\infty}\frac{H\exp\left(-hZ_{c}^{2}\right)}{\sqrt{\sigma_{x}^{2}+\langle U_{x}^{2}\rangle Z_{c}^{2}} \sqrt{\sigma_{y}^{2}+\langle U_{y}^{2}\rangle Z_{c}^{2}}}dZ_{c},
+\label{eq:hourglasseffect}
+\end{equation} 
+with the $H$ and $h$ parameters, and the combined laser pulse - electron bunch transverse divergence term $\langle U_{x/y}^{2}\rangle$ defined as
+\begin{gather}
+H = \cos\phi\sqrt{\frac{\sigma_{x}^{2}\sigma_{y}^{2}}{\pi\sigma_{z}^{2}}},
+\label{eq:Hmiyahara} \\
+h = \frac{\sin^{2}\phi}{\sigma_{x}^{2}+\langle U_{x}^{2}\rangle Z_{c}^{2}}+\frac{\cos^{2}\phi}{\sigma_{z}^{2}},
+\label{eq:hmiyahara} \\
+\langle U_{x/y}^{2}\rangle = \frac{\left(\sigma_{x,e}^{2}/\beta_{x/y}^{*2}\right)+\left(\sigma_{i,L}^{2}/z_{R}^{2}\right)}{2},
+\label{eq:divergence term}
+\end{gather}
+assuming the laser - electron crossing (and therefore the crossing angle) is oriented in the $x$-$z$ plane, where $\beta^{*}_{x/y}$ is the $\beta$-function at the interaction point and $z_{R} = 4\pi\sigma_{L}^{2}/\lambda$ is the Rayleigh range in the form utilised by Siegmann \cite{siegmann1986lasers}, with $\lambda$ the wavelength of the incident photon. 
+
+
+\section{Limitations of Presented Formulae}
+
+The scattering angle dependent cross section formula (Eq.~\ref{eq:fullcrosssectionintegral}) is limited to the linear inverse Compton scattering regime where $a_{0} \ll 1$, with $a_{0}$ the normalised laser vector potential, i.e this formula is only valid for low laser intensities. It is inherent in (Eq.~\ref{eq:fullcrosssectionintegral}) that the interaction occurs from a point source - the transverse and longitudinal positions of the electrons within the bunch are neglected. 
+
+Within (Eq.~\ref{eq:collimatedflux},~\ref{eq:collimatedfluxhourglass}) the effect of the energy spread of the bunch, the laser pulse energy spread and (partially)\footnote{The geometry consideration via the luminosity is taken into account but not the full physical extent of the electron bunch.} the emittance of the bunch are neglected as this methodology is intended as a quick analytical calculation, the codes \textsc{ICARUS} and \textsc{ICCS3D} properly take into account these factors.  
+
+\bibliographystyle{unsrt}
+\bibliography{CollimatedFluxDerivation}
+
+\end{document}
